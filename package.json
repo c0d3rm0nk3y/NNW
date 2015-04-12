@@ -6,18 +6,19 @@
   "dependencies": {
     "grunt-exec": "^0.4.6",
     "grunt": "^0.4.5",
-    "q" : "*",
-    "url" : "*",
-    "google-news" : "*",
-    "mongoose" : "*",
-    "feed-read" : "*",
-    "text-miner" : "*",
-    "htmlstrip-native" : "*",
-    "node-readability" : "*",
-    "google-feed-api" : "*"
+    "q": "*",
+    "url": "*",
+    "google-news": "*",
+    "mongoose": "*",
+    "feed-read": "*",
+    "text-miner": "*",
+    "htmlstrip-native": "*",
+    "node-readability": "*",
+    "google-feed-api": "*"
   },
   "devDependencies": {
-    "grunt": "^0.4.5"
+    "grunt": "^0.4.5",
+    "grunt-shell": "^1.1.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
