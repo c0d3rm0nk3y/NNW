@@ -1,0 +1,40 @@
+{
+  "name": "NNW",
+  "version": "1.0.0",
+  "description": "news watcher command line utility",
+  "main": "nnw.js",
+  "dependencies": {
+    "grunt-exec": "^0.4.6",
+    "grunt": "^0.4.5",
+    "q" : "*",
+    "url" : "*",
+    "google-news" : "*",
+    "mongoose" : "*",
+    "feed-read" : "*",
+    "text-miner" : "*",
+    "htmlstrip-native" : "*",
+    "node-readability" : "*",
+    "google-feed-api" : "*"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/c0d3rm0nk3y/NNW.git"
+  },
+  "keywords": [
+    "news",
+    "search",
+    "save"
+  ],
+  "author": "datawhore",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/c0d3rm0nk3y/NNW/issues"
+  },
+  "homepage": "https://github.com/c0d3rm0nk3y/NNW"
+}
