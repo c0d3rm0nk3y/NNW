@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 // create scheme
 var searchSchema = new Schema({
-  keywords : String,
+  keywords : [String],
   timestamp : Date,
   tags : String,
   updated_at : Date
