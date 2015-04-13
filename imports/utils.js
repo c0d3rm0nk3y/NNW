@@ -3,6 +3,7 @@ var feed = require('feed-read');
 var mongoose = require('mongoose');
 var read = require('node-readability');
 var hs = require('htmlstrip-native');
+var sController = require('searchController');
 
 var o = { include_script: false, include_style: false, compact_whitespace: true };
 
@@ -23,7 +24,7 @@ exports.get = function(keywords) {
   
   //results.message = "hello from utils.get()..";
   
-  getSearchId(keywords).then(
+  sController.getSearchId(keywords).then(
     function(sID) {
       console.log('\n\nutils.get().SearchId.then() Search ID is : %s', sID );
       
@@ -37,6 +38,7 @@ exports.get = function(keywords) {
   return d.promise;
 }
 
+/**
 getSearchId = function(keywords) {
   var d = q.defer();
   
@@ -99,9 +101,11 @@ mongoose.connection.on('connected', function () { console.log('\n\nMongoose defa
 mongoose.connection.on('error',function (err) { console.log('\n\nMongoose default connection error: ' + err); });
 mongoose.connection.on('disconnected', function () { console.log('\n\nMongoose default connection disconnected'); });
 
+
 process.on('SIGINT', function() {
   mongoose.connection.close(function () {
     console.log('\n\nMongoose default connection disconnected through app termination');
     process.exit(0);
   });
 });
+**/
