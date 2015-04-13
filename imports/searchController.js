@@ -39,8 +39,10 @@ exports.getSearchId = function(keywords) {
 createSearch = function(keywords) {
   var d = q.defer();
   console.log('createSearch(): %s...', keywords);
+  var kw = keywords.split(' ');
+  kw.sort();
   s = Search({
-    keywords: keywords,
+    keywords: kw,
     timestamp: new Date(),
     tags : ""
   });
