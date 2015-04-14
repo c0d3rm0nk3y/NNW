@@ -3,7 +3,7 @@ var feed = require('feed-read');
 var mongoose = require('mongoose');
 var read = require('node-readability');
 var hs = require('htmlstrip-native');
-var sController = require('searchController');
+var sController = require('./searchController');
 
 var o = { include_script: false, include_style: false, compact_whitespace: true };
 
@@ -36,7 +36,25 @@ exports.get = function(keywords) {
   );
   
   return d.promise;
-}
+};
+
+processKeywords = function(keywords, searchId) {
+  var d = q.defer();
+  
+  var url = "https://news.google.com/news?num=100&pz=1&cf=all&ned=us&hl=en&output=rss&q=";
+  url = url + keywords.replace(' ', '+');
+  feed(url,function(err, articles) {
+    if(err) { console.log("feed err: %s\n", err); }
+    
+    
+  });
+  
+  
+  return d.promise;
+};
+
+
+
 
 /**
 getSearchId = function(keywords) {

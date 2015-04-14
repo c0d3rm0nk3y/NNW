@@ -1,3 +1,4 @@
+var q = require('q');
 var mongoose = require('mongoose');
 // Build the connection string
 var dbURI = 'mongodb://localhost/nnwDB';
@@ -34,7 +35,7 @@ exports.getSearchId = function(keywords) {
   });
   
   return d.promise;
-}
+};
 
 createSearch = function(keywords) {
   var d = q.defer();
@@ -62,7 +63,7 @@ createSearch = function(keywords) {
     
   }catch(ex) { console.log('Search.save ex: %s', ex); }
   return d.promise;
-}
+};
 
 mongoose.connection.on('connected', function () { console.log('\n\nMongoose default connection open to ' + dbURI); });
 mongoose.connection.on('error',function (err) { console.log('\n\nMongoose default connection error: ' + err); });
