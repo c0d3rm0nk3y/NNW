@@ -9,13 +9,7 @@ var feedsSchema = new Schema({
 });
 
 
-feedsSchema.pre('save', function(next)  {
-  var cDate = new Date();
-  this.updated_at = cDate;
-  if(!this.created_at) this.created_at = cDate;
-  next();
-});
-
+feedsSchema.pre('save', function(next)  {});
 
 var Feeds = mongoose.model('Feeds', feedsSchema);
 

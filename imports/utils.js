@@ -9,7 +9,7 @@ var o = { include_script: false, include_style: false, compact_whitespace: true 
 
 var Search = require('../models/search');
 var Article   = require('../models/article');
-
+var Feeds  = require('../models/feeds');
 
 // Build the connection string
 var dbURI = 'mongodb://localhost/nnwDB';
@@ -45,7 +45,7 @@ processKeywords = function(keywords, searchId) {
   url = url + keywords.replace(' ', '+');
   feed(url,function(err, articles) {
     if(err) { console.log("feed err: %s\n", err); }
-    
+    processArticleFeeds(articles);
     
   });
   
@@ -53,7 +53,11 @@ processKeywords = function(keywords, searchId) {
   return d.promise;
 };
 
-
+processArticleFeeds = function(articles) {
+  articles.forEach(function(article) {
+    
+  });  
+};
 
 
 /**
