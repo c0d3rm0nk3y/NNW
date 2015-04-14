@@ -2,6 +2,8 @@ var q = require('q');
 var mongoose = require('mongoose');
 // Build the connection string
 var dbURI = 'mongodb://localhost/nnwDB';
+// for use when in nitrious
+var dbRemote = "mongodb://nnwUser:JohnPurple#cake!99@ds061711.mongolab.com:61711/nnw";
 
 var Search = require('../models/search');
 
