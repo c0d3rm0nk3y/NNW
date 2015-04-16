@@ -26,8 +26,6 @@ exports.get = function(keywords) {
   
   sController.getSearchId(keywords).then(
     function(sID) {
-      console.log('\n\nutils.get().SearchId.then() Search ID is : %s', sID );
-      
       
       result.sID = sID;
       d.resolve(results);
@@ -56,7 +54,7 @@ processKeywords = function(keywords, searchId) {
 processArticleFeeds = function(articles) {
   articles.forEach(function(article) {
     
-  });  
+  });
 };
 
 
@@ -68,7 +66,7 @@ getSearchId = function(keywords) {
   mongoose.connect(dbURI);
   
   Search.find( { keywords: keywords }).limit(1).exec(function(err, results){
-    if(err) { console.log('\n\nSearch.find() err: %s', err); } 
+    if(err) { console.log('\n\nSearch.find() err: %s', err); }
     else if(results.length === 0) {
       console.log('\n\nQuery of "%s" is for first time.. creating entry...', keywords);
       

@@ -1,24 +1,22 @@
-var q = require('q');
-var mongoose = require('mongoose');
-// Build the connection string
-var dbURI = 'mongodb://localhost/nnwDB';
-// for use when in nitrious
+var q = require('q'); var mongoose = require('mongoose'); // Build theconnection string
+var dbURI = 'mongodb://localhost/nnwDB'; // for use when innitrious
 var dbRemote = "mongodb://nnwUser:JohnPurple#cake!99@ds061711.mongolab.com:61711/nnw";
-
 var Search = require('../models/search');
 
 exports.getSearchId = function(keywords) {
   var d = q.defer();
-  
+  var keywordsArray = keywords.split(" ");
   // Create the database connection
   mongoose.connect(dbURI);
-  
-  Search.find( { keywords: keywords }).limit(1).exec(function(err, results){
-    if(err) { console.log('\n\nSearch.find() err: %s', err); } 
+  /**
+    something is wrong with the if->exist function.. not catching
+  ***/
+  Search.find( { keywords: keywordsArray }).limit(1).exec(function(err, results){
+    if(err) { console.log('\n\nSearch.find() err: %s', err); }
     else if(results.length === 0) {
       console.log('\n\nQuery of "%s" is for first time.. creating entry...', keywords);
       
-      createSearch(keywords).then(
+      createSearch(keywordsArray).then(
         function(sId) {
           console.log('getSearchId().createSearch() result: ', sId);
           d.resolve(sId);
@@ -41,11 +39,10 @@ exports.getSearchId = function(keywords) {
 
 createSearch = function(keywords) {
   var d = q.defer();
-  console.log('createSearch(): %s...', keywords);
-  var kw = keywords.split(' ');
-  kw.sort();
+  console.log('createSearch(): %s...', keywords.toString());
+  
   s = Search({
-    keywords: kw,
+    keywords: keywords,
     timestamp: new Date(),
     tags : ""
   });
