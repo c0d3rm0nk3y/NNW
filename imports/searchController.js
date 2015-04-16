@@ -2,6 +2,7 @@ var q = require('q'); var mongoose = require('mongoose'); // Build theconnection
 var dbURI = 'mongodb://localhost/nnwDB'; // for use when innitrious
 var dbRemote = "mongodb://nnwUser:JohnPurple#cake!99@ds061711.mongolab.com:61711/nnw";
 var Search = require('../models/search');
+var Feeds = require('../models/feeds.js');
 
 exports.getSearchId = function(keywords) {
   var d = q.defer();
@@ -18,10 +19,8 @@ exports.getSearchId = function(keywords) {
       
       createSearch(keywordsArray).then(
         function(sId) {
-          console.log('getSearchId().createSearch() result: ', sId);
           d.resolve(sId);
         }, function(err) {
-          console.log('getSearchId().createSearch() err: %s',err);
           d.reject('getSearchId().createSearch() err: ' + err);
         }
       );

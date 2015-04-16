@@ -26,7 +26,7 @@ exports.get = function(keywords) {
   
   sController.getSearchId(keywords).then(
     function(sID) {
-      
+      processKeywords(keywords, sID);
       result.sID = sID;
       d.resolve(results);
       
@@ -43,7 +43,7 @@ processKeywords = function(keywords, searchId) {
   url = url + keywords.replace(' ', '+');
   feed(url,function(err, articles) {
     if(err) { console.log("feed err: %s\n", err); }
-    processArticleFeeds(articles);
+    processArticleFeeds(articles,searchId);
     
   });
   
@@ -51,9 +51,21 @@ processKeywords = function(keywords, searchId) {
   return d.promise;
 };
 
-processArticleFeeds = function(articles) {
+  // Each article has the following properties:
+  //
+  //   * "title"     - The article title (String).
+  //   * "author"    - The author's name (String).
+  //   * "link"      - The original article link (String).
+  //   * "content"   - The HTML content of the article (String).
+  //   * "published" - The date that the article was published (Date).
+  //   * "feed"      - {name, source, link}
+  //
+
+processArticleFeeds = function(articles,searchId) {
   articles.forEach(function(article) {
-    
+    feed(article.link, function(err, result) {
+      
+    });
   });
 };
 

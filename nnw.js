@@ -28,8 +28,7 @@ function get(command) {
   
   
   utility.get(command).then(
-    function(result) {
-      console.log('\n\nresults returned from utils.get(): %s', JSON.stringify(result, null, 2));
+    function(searchId) {
       
     }, function(err) { console.log('utils.get() err: %s', err); }
   );
