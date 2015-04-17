@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var read = require('node-readability');
 var hs = require('htmlstrip-native');
 var sController = require('./searchController');
+var fController = require('./feedsController');
 
 var o = { include_script: false, include_style: false, compact_whitespace: true };
 
@@ -62,10 +63,14 @@ processKeywords = function(keywords, searchId) {
   //
 
 processArticleFeeds = function(articles,searchId) {
+  console.log('processArticleFeeds()..');
   articles.forEach(function(article) {
-    feed(article.link, function(err, result) {
-      
+    fController.getFeedId(article).then(function(fId) {
+      console.log('feedId: %s', fId);
+    }, function(err) {
+      console.log('getFeedId err: %s', err);
     });
+    //feed(article.link, function(err, result) {});
   });
 };
 
