@@ -5,6 +5,7 @@ var read = require('node-readability');
 var hs = require('htmlstrip-native');
 var sController = require('./searchController');
 var fController = require('./feedsController');
+var aCtrl = require("./articleController");
 
 var o = { include_script: false, include_style: false, compact_whitespace: true };
 
@@ -61,16 +62,16 @@ processKeywords = function(keywords, searchId) {
   //   * "published" - The date that the article was published (Date).
   //   * "feed"      - {name, source, link}
   //
+  
+  /* dont worry about feed dbs for this.. they will always return news.googe.com..blah.blah.xml*/
 
 processArticleFeeds = function(articles,searchId) {
   console.log('processArticleFeeds()..');
   articles.forEach(function(article) {
-    fController.getFeedId(article).then(function(fId) {
-      console.log('feedId: %s', fId);
-    }, function(err) {
-      console.log('getFeedId err: %s', err);
-    });
-    //feed(article.link, function(err, result) {});
+    aCtrl.get(article.link).then(
+      function(result) { console.log(result)},
+      function(err) { console.log(err); }
+    );
   });
 };
 

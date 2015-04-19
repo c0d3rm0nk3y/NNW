@@ -9,7 +9,7 @@ var feedsSchema = new Schema({
 });
 
 
-feedsSchema.pre('save', function(next)  {});
+//feedsSchema.pre('save', function(next)  {});
 
 var Feeds = mongoose.model('Feeds', feedsSchema);
 

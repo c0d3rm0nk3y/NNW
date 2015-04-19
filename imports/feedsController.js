@@ -1,39 +1,39 @@
 var q = require('q');
-var mongoose = require('mongoose'); // Build theconnection string
-var dbURI = 'mongodb://localhost/nnwDB'; // for use when in nitrious
-var dbRemote = "mongodb://nnwUser:JohnPurple#cake!99@ds061711.mongolab.com:61711/nnw";
+// var mongoose = require('mongoose'); // Build theconnection string
+// var dbURI = 'mongodb://localhost/nnwDB'; // for use when in nitrious
+// var dbRemote = "mongodb://nnwUser:JohnPurple#cake!99@ds061711.mongolab.com:61711/nnw";
 
-mongoose.connection.on('connected',    function ()    { console.log('\n\nMongoose default connection open to %s\n', dbURI); });
-mongoose.connection.on('error',        function (err) { console.log('\n\nMongoose default connection error: %s\n', err); });
-mongoose.connection.on('disconnected', function ()    { console.log('\n\nMongoose default connection disconnected\n'); });
+// mongoose.connection.on('connected',    function ()    { console.log('\n\nMongoose default connection open to %s\n', dbURI); });
+// mongoose.connection.on('error',        function (err) { console.log('\n\nMongoose default connection error: %s\n', err); });
+// mongoose.connection.on('disconnected', function ()    { console.log('\n\nMongoose default connection disconnected\n'); });
+
+// stop with worrying about the feed controller.. its all going to come back as news.google.com.....xml
+
 
 var Feed = require('../models/feeds');
 
 exports.getFeedId = function(content) {
-  
+  //console.log("getFeedId(%s)",JSON.stringify(content,null,2));
   var d = q.defer();
+  //mongoose.connect(dbURI);
+    
   try {
-    //   * "content"      - {name, source, link}
+    //   * "content"      - {name, source, link} **
+    
+    console.log("%s",JSON.stringify(content,null,2));
     Feed.find(content).limit(1).exec(function(err, results) {
       if(err) { console.log("Feeds.find() err: %s", err); }
-      // if no results (length = 0)
-      console.log(JSON.stringify(results, null, 2));
-      if(results.length === 0) {
+      else if(results.length === 0) {
         createFeedEntry(content).then(
-          function(result) {
-            console.log('feed entry created, id: %s', result);
-            d.resolve(result);
-          },
-          function(err) {
-            console.log("createFeedEntry().Feed.save() err: %s", err);
-            d.reject(err);
-          }
+          function(result) { d.resolve(result); },
+          function(err)    { d.reject(err); }
         );
       } else {
-        console.log("feed found, id: %s", result[0]._id);
+        d.resolve(results[0]._id);
       }
     });
   } catch(ex) {console.log('getFeedId() ex: %s', ex);}
+  
   return d.promise;
 };
 
@@ -44,16 +44,21 @@ to handle a connection..
 **/
 
 createFeedEntry = function(content) {
-  console.log('createdFeedEntry()...');
+  //console.log('createdFeedEntry()...');
   var d = q.defer();
-  var f = Feed(content);
-  console.log('f: %s', JSON.stringify(f,null,2));
-  f.save(function(err) {
-    if(err) { d.reject(err); } // duh
-    else {
-      console.log('f: saved successfully');
-      d.resolve(f);
-    } // send back the id of the entry so it can be included in the search db entry
+  f = Feed({
+    name: content.name,
+    source: content.source,
+    link: content.link
   });
+  
+  //console.log('f: %s', JSON.stringify(f,null,2));
+  try {
+    f.save(function(err) {
+      console.log('f.save()..');
+      if(err) { d.reject(err); } // duh
+      else    { d.resolve(f);  } // send back the id of the entry so it can be included in the search db entry
+    });
+  } catch(ex) { d.reject(ex); }
   return d.promise;
 };
