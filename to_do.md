@@ -5,3 +5,4 @@
 * when processing a feed's articles save every one, adding statistics on an article, entire feeds worth of articles and finally, all articles from all feeds in the query.
 * need a function to handle pulling by date range.
 * use node.api readline to create a command prompt loop for program.. example can be found here: http://goo.gl/XZ5EpP
+* 041915 : keyword search to articles in db finished.. here is an idea.. control the flow so at the end you can save a complete json to file..

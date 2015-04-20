@@ -28,7 +28,12 @@ exports.get = function(keywords) {
   
   sController.getSearchId(keywords).then(
     function(sID) {
-      processKeywords(keywords, sID);
+      processKeywords(keywords, sID).then(
+        function(result) {
+          
+        }, function(err) {}
+      );
+      
       result.sID = sID;
       d.resolve(results);
       
@@ -66,15 +71,15 @@ processKeywords = function(keywords, searchId) {
   /* dont worry about feed dbs for this.. they will always return news.googe.com..blah.blah.xml*/
 
 processArticleFeeds = function(articles,searchId) {
-  console.log('processArticleFeeds()..');
+  
   articles.forEach(function(article) {
-    aCtrl.get(article.link).then(
-      function(result) { console.log(result)},
-      function(err) { console.log(err); }
+    aCtrl.get(article).then(
+      function(result) {
+        sController.addArticleToSearch(searchId, result._id);
+      },function(err) { console.log(err); }
     );
   });
 };
-
 
 /**
 getSearchId = function(keywords) {

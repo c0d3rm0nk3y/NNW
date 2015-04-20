@@ -1,5 +1,5 @@
-var utility = require('./imports/utils');
-
+var utility = require('./imports/utils.beta');
+var fs = require('fs');
 
 var a = process.argv.slice(2);
 
@@ -18,7 +18,7 @@ function defaultResponse() {
   response += "COMMANDS\n\n";
   response += "update: this pulls in fresh articles form rss feeds saved from previous searches.\n";
   response += "get 'keyword keyword': This will search for keywords both in articles and feeds\n";
-  response += "show feeds: This will show the titles of all accumlated feeds\n";
+  response += "show articles|searches: This will show the titles of all accumlated feeds\n";
   response += "\n\n";
   console.log(response);
 }
@@ -28,8 +28,16 @@ function get(command) {
   
   
   utility.get(command).then(
-    function(searchId) {
-      
+    function(result) {
+      fs.writeFile(command + ".json", JSON.stringify(result,null,2), function(err) {
+        if(err) {
+          console.log('write failed... err: %s', err);
+        }
+      });
+      console.log("%s created on: %s id: %s", result.search.keywords, result.search.timestamp, result.search._id);
+      console.log("\n");
+      console.log("%s articles", result.articles.length);
+      //console.log(JSON.stringify(result,null,2));
     }, function(err) { console.log('utils.get() err: %s', err); }
   );
 }

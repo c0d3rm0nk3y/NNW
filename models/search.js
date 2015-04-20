@@ -5,6 +5,7 @@ var Schema   = mongoose.Schema;
 var searchSchema = new Schema({
   keywords : [String],
   feedsId : [String],
+  articleIds : [String],
   timestamp : Date,
   tags : String,
   updated_at : Date

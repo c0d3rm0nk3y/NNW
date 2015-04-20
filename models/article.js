@@ -6,6 +6,7 @@ var articleSchema = new Schema({
   author : String,
   link : String,
   content : String,
+  description : String,
   pubDate : Date,
   text : String,
   paragraphs : [String],
@@ -14,7 +15,6 @@ var articleSchema = new Schema({
 
 var Article = mongoose.model('Article', articleSchema);
 module.exports = Article;
-
 
   // Each article has the following properties:
   //
