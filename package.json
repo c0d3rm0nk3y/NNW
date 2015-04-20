@@ -11,6 +11,7 @@
     "google-news": "*",
     "mongoose": "*",
     "feed-read": "*",
+    "govtrack-node" : "*",
     "text-miner": "*",
     "htmlstrip-native": "*",
     "node-readability": "*",

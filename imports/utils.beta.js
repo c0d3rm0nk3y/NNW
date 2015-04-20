@@ -153,7 +153,7 @@ saveArticle = function(article) {
           }
         });
       } else {
-        //d.resolve(results[0]);
+        console.log('article exist alreadys: %s', results[0].title);
       }
     });
   } catch(ex) { console.log('saveArticle ex: %s', JSON.stringify(ex,null,2)); }

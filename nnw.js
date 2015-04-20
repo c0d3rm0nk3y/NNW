@@ -23,6 +23,7 @@ var a = process.argv.slice(2);
 switch(a[0]) {
   case 'update' : update(a[1]); break;
   case 'get' : get(a[1]); break;
+  case 'updateText' : updateText(); break;
   case 'yesterday' : yesterday(a[1]); break;
   case 'show' : show(a[1]); break;
   default : defaultResponse(); break;
@@ -35,6 +36,7 @@ function defaultResponse() {
   var response = "\n\nSorry, I don't know what your talking about...\n\n";
   response += "COMMANDS\n\n";
   response += "update: this pulls in fresh articles form rss feeds saved from previous searches...\n";
+  response += "updateText - arguments: none. def: This will go through the entire db and update the 'text' of an article if its blank...\n";
   response += "yesterday - arguments: none. def: this will pull all articles in the db from yesterday...\n";
   response += "get - arguments: keywords to search surrounded in 'qoutes'.  def: This will search for keywords both in articles and feeds...\n";
   response += "show articles|searches: This will show the titles of all accumlated feeds...\n";
@@ -54,7 +56,16 @@ whoismyrepresentative.com//api
 
 whoismyrepresentative.com/getall_mems.php?zip=55109&output=json
 
+www.senate.gov/general/contact_information/senators_cfm.xml
+
+www.govtrack.us/developers/api
+
+
 */
+
+function updateText() {
+  aCtrl.updateText();
+};
 
 function yesterday() {
   // mongo shell search by date range

@@ -80,6 +80,17 @@ exports.yesterday = function() {
   return d.promise;
 };
 
+exports.updateText = function() {
+  try {
+    Article.find({}).exec(function(results) {
+      if(results !== null) {
+        console.log('getText().find({text: ""}).count = %', results.length);
+        
+      }
+    });
+  } catch(ex) { console.log("getText() ex: %s", ex); }
+};
+
 getDate = function(adjustDay) {
   var d = new Date();
 	d.setHours(0);
@@ -87,7 +98,7 @@ getDate = function(adjustDay) {
 	d.setSeconds(0);
   d.setDate(d.getDate() + adjustDay);
   return d;
-}
+};
 
 getText = function(article) {
   var d = q.defer();
