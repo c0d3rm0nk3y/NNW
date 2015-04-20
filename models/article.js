@@ -9,6 +9,7 @@ var articleSchema = new Schema({
   description : String,
   pubDate : Date,
   text : String,
+  searchId : String,
   paragraphs : [String],
   sentences  : [String]
 });
