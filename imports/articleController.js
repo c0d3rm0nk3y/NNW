@@ -67,7 +67,12 @@ exports.yesterday = function() {
       } else if(results.length > 0) {
         d.resolve(results);
         results.forEach(function(article) {
-          console.log("%s: %s", article.pubDate, article.title);
+          var r = {
+            pubDate: article.pubDate,
+            title : article.title,
+            text : article.text
+          };
+          console.log("%s", JSON.stringify({ pubDate: article.pubDate, title : article.title, text : article.text },null,2));
         });
       } else { console.log("no results found for yesterday..."); d.resolve([]); }
     });

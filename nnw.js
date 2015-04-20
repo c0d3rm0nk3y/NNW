@@ -47,6 +47,13 @@ function defaultResponse() {
 db.collection.find( { field: { $gt: value1, $lt: value2 } } );
 
 this will be needed to pull 'yesterdays' news
+
+** here is an api to get your reppresentativ
+
+whoismyrepresentative.com//api
+
+whoismyrepresentative.com/getall_mems.php?zip=55109&output=json
+
 */
 
 function yesterday() {
