@@ -24,9 +24,10 @@ switch(a[0]) {
   case 'update' : update(a[1]); break;
   case 'get' : get(a[1]); break;
   case 'updateText' : updateText(); break;
-  case 'yesterday' : yesterday(a[1]); break;
-  case 'show' : show(a[1]); break;
-  default : defaultResponse(); break;
+  case 'add'        : add(a[1], a[2]); break;
+  case 'yesterday'  : yesterday(a[1]); break;
+  case 'show'       : show(a[1]); break;
+  default           : defaultResponse(); break;
 }
 
 function defaultResponse() {
@@ -35,6 +36,7 @@ function defaultResponse() {
   
   var response = "\n\nSorry, I don't know what your talking about...\n\n";
   response += "COMMANDS\n\n";
+  response += "add - arguments: feed|article, url. def: this will add a feed or an article to the db.\n";
   response += "update: this pulls in fresh articles form rss feeds saved from previous searches...\n";
   response += "updateText - arguments: none. def: This will go through the entire db and update the 'text' of an article if its blank...\n";
   response += "yesterday - arguments: none. def: this will pull all articles in the db from yesterday...\n";
@@ -63,9 +65,13 @@ www.govtrack.us/developers/api
 
 */
 
+function add(what, url) {
+  console.log('add: %s, %s', what, url);
+}
+
 function updateText() {
-  aCtrl.updateText();
-};
+  aCtrl.updateText().then(function(result){mongoose.disconnect();},function(err){mongoose.disconnect();});
+}
 
 function yesterday() {
   // mongo shell search by date range

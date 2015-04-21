@@ -81,14 +81,19 @@ exports.yesterday = function() {
 };
 
 exports.updateText = function() {
+  var d = q.defer();
   try {
-    Article.find({}).exec(function(results) {
+    Article.find({}).exec(function(err, results) {
       if(results !== null) {
         console.log('getText().find({text: ""}).count = %', results.length);
-        
+        d.resolve(results.length);
+      } else {
+        console.log('results are null..');
+        d.reject('results are null');
       }
     });
-  } catch(ex) { console.log("getText() ex: %s", ex); }
+  } catch(ex) { console.log("getText() ex: %s", ex); d.reject(ex); }
+  return d.promise;
 };
 
 getDate = function(adjustDay) {
