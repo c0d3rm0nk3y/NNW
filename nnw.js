@@ -1,33 +1,28 @@
-var utility = require('./imports/utils.beta');
-var aCtrl   = require('./imports/articleController');
+var utility  = require('./imports/util.beta');
+var aCtrl    = require('./imports/articleController');
+var q        = require("q");
+// var mongoose = require('mongoose'); // Build theconnection string
 
-var mongoose = require('mongoose'); // Build theconnection string
-var dbURI = 'mongodb://localhost/nnwDB'; // for use when innitrious
-var dbRemote = "mongodb://nnwUser:JohnPurple#cake!99@ds061711.mongolab.com:61711/nnw";
+// var dbURI = 'mongodb://localhost/nnwDB'; // for use when innitrious
+// var dbRemote = "mongodb://nnwUser:JohnPurple#cake!99@ds061711.mongolab.com:61711/nnw";
 
-mongoose.connect(dbURI);
+// mongoose.connection.on('connected', function () { console.log('\n\nMongoose default connection open to ' + dbURI); });
+// mongoose.connection.on('error',function (err) { console.log('\n\nMongoose default connection error: ' + err); });
+// mongoose.connection.on('disconnected', function () { console.log('\n\nMongoose default connection disconnected'); });
 
-mongoose.connection.on('connected', function () { console.log('\n\nMongoose default connection open to ' + dbURI); });
-mongoose.connection.on('error',function (err) { console.log('\n\nMongoose default connection error: ' + err); });
-mongoose.connection.on('disconnected', function () { console.log('\n\nMongoose default connection disconnected'); });
 
-process.on('SIGINT', function() {
-  mongoose.connection.close(function () {
-    console.log('\n\nMongoose default connection disconnected through app termination');
-    process.exit(0);
-  });
-});
-
-var a = process.argv.slice(2);
-
-switch(a[0]) {
-  case 'update' : update(a[1]); break;
-  case 'get' : get(a[1]); break;
-  case 'updateText' : updateText(); break;
-  case 'add'        : add(a[1], a[2]); break;
-  case 'yesterday'  : yesterday(a[1]); break;
-  case 'show'       : show(a[1]); break;
-  default           : defaultResponse(); break;
+function init() {
+  var a = process.argv.slice(2);
+  
+  switch(a[0]) {
+    case 'update'     : update(a[1]); break;
+    case 'news'       : news(a[1]); break; //.then(function() {mongoose.disconnect();}, function(err) {mongoose.disconnect();}).fin(function(){mongoose.disconnect();}); break;
+    case 'updateText' : updateText(); break;
+    case 'add'        : add(a[1], a[2]); break;
+    case 'yesterday'  : yesterday(a[1]); break;
+    case 'show'       : show(a[1]); break;
+    default           : defaultResponse(); break;
+  }
 }
 
 function defaultResponse() {
@@ -44,7 +39,7 @@ function defaultResponse() {
   response += "show articles|searches: This will show the titles of all accumlated feeds...\n";
   response += "\n\n";
   console.log(response);
-  mongoose.disconnect();
+  
 }
 
 /*
@@ -65,12 +60,22 @@ www.govtrack.us/developers/api
 
 */
 
+// *** SERIOUSLY.. WHAT ARE YOU DOING?
+// you can make a webapp as a tool..
+// after you get the CRUD done maybe makea  web interface..
+
 function add(what, url) {
   console.log('add: %s, %s', what, url);
+  what = what.toLowerCase();
+  switch(what) {
+    case 'article': break;
+    case 'feed': break;
+    default: break;
+  }
 }
 
 function updateText() {
-  aCtrl.updateText().then(function(result){mongoose.disconnect();},function(err){mongoose.disconnect();});
+  aCtrl.updateText().then(function(result){},function(err){});
 }
 
 function yesterday() {
@@ -78,14 +83,16 @@ function yesterday() {
   // > db.articles.find({ pubDate: { $gte:ISODate("2015-04-17T00:00:00.000Z") , $lt: ISODate("2015-04-18T00:00:00.000Z")  }}).pretty()
   aCtrl.yesterday().then(
     function(results) {
-      mongoose.disconnect();
+      
     }, function(err) { console.log('yesterday err: %s', JSON.stringify(err,null,2)); }
   );
 }
 
-function get(command) {
+function news(command) {
+  //var d = q.defer();
   console.log('nnw.get(command): %s', command);
   
+  //dbURI);
   
   utility.get(command).then(
     function(result) {
@@ -94,10 +101,16 @@ function get(command) {
           console.log('write failed... err: %s', err);
         }
       });
-      console.log("%s created on: %s id: %s", result.search.keywords, result.search.timestamp, result.search._id);
-      console.log("\n");
-      console.log("%s articles", result.articles.length);
-      //console.log(JSON.stringify(result,null,2));
-    }, function(err) { console.log('utils.get() err: %s', err); }
-  );
+    }, function(err) { console.log('utils.get() err: %s', err); }//d.reject(err);
+    
+  ).fin(function() {
+    
+    //d.resolve();
+  }).done(function() {
+    
+    //d.resolver();
+  });
+  //return d.prommise;
 }
+
+init();

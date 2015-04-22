@@ -4,17 +4,15 @@ var Schema   = mongoose.Schema;
 // create scheme
 var searchSchema = new Schema({
   keywords : [String],
-  feedsId : [String],
-  articleIds : [String],
-  timestamp : Date,
-  tags : String,
-  updated_at : Date
+  created_at : Date,
+  updated_on : [Date],
+  tags : [String]
 });
 
 
 searchSchema.pre('save', function(next)  {
   var cDate = new Date();
-  this.updated_at = cDate;
+  this.updated_on.push(cDate);
   if(!this.created_at) this.created_at = cDate;
   next();
 });
