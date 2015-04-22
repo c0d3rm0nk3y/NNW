@@ -87,7 +87,9 @@ getFeed = function(keywords, searchId) {
         
       });
       
+      // ** too tired to continue.. maybe trying something else.. inserting the r() higher up the chain maybe..
       
+      // get some rest.. your already up to late.. morning note.. try wrapping the read around the save routines and return..
       d.resolve(articles);
     });
   } catch(ex) { d.reject(ex); }
